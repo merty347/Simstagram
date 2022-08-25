@@ -1,0 +1,51 @@
+﻿@model UserViewModel
+
+<link rel="stylesheet" href="~/css/login.css" />
+<div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+    <div class="card card0 border-0">
+        <div class="row d-flex">
+            <div class="col-lg-6">
+                <div class="card1 pb-5">
+                    <div class="row justify-content-center mt-4 mb-5 border-line">
+                        <img class="image" src="~/img/kotek.jpg" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card2 card border-0 px-4 py-5">
+                    <section>
+                        <form asp-action="EditProfile" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="row px-3">
+                                <label class="mb-1" asp-for="FirstName">
+                                    <h6 class="mb-0 text-sm">First Name</h6>
+                                </label>
+                                <input asp-for="FirstName" class="mb-4" type="text" placeholder="Enter your new first name" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="row px-3">
+                                <label class="mb-1" asp-for="LastName">
+                                    <h6 class="mb-0 text-sm">Last Name</h6>
+                                </label>
+                                <input asp-for="LastName" class="mb-4" type="text" placeholder="Enter your new last name" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <div class="row px-3">
+                                <label class="mb-1" asp-for="Description">
+                                    <h6 class="mb-0 text-sm">Description</h6>
+                                </label>
+                                <input asp-for="Description" class="mb-4" type="text" placeholder="Enter your description" />
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                            <div class="row mb-3 px-3">
+                                <button type="submit" class="btn btn-blue text-center">Save</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

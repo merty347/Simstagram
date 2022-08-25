@@ -1,0 +1,101 @@
+﻿@model Simstagram2._0.Models.UserViewModel
+@{ 
+    //IEnumerable<Photo> photos = ViewData["GalleryUser"] as IEnumerable<Photo>;
+    IEnumerable<ProfileViewModel> photos = ViewData["GalleryUser"] as IEnumerable<ProfileViewModel>;
+}
+@*<link rel="stylesheet" href="~/css/profajl.css" />*@
+<link rel="stylesheet" href="~/css/profile.css"/>
+<link rel="stylesheet" href="~/css/lightbox.min.css"/>
+<script src="~/js/lightbox-plus-jquery.min.js"></script>
+<header>
+    <div class="container">
+        <div class="profile">            
+            <div class="profile-user-settings">
+                <div class="profile-image">
+                    <img src="@TempData["Profilowe"]" width="130" class="rounded mb-2 img-thumbnail" />
+                </div>
+                <h1 class="profile-user-name"> @TempData["Username"]</h1>
+                @if (ViewBag.Email == User.Identity.Name)
+                {
+                    @*<form asp-controller="Profile" asp-action="EditProfile">
+                        <div class="form-group">*@
+                            <a asp-action="EditProfile" asp-controller="Profile" class="btn profile-edit-btn">Edit Profile</a>
+                        @*</div>
+                    </form>*@
+                    <form asp-action="EditProfilePic" enctype="multipart/form-data">
+                        <div class="form-group">
+                            @*<button class="btn profile-edit-btn">Add New Profile Photo</button>*@
+                            <input asp-for="ProfilePhoto" type="file" value="Add New Profile Photo" class="btn profile-edit-btn" />
+                            <span asp-validation-for="ProfilePhoto" class="text-danger"></span>
+                            <button class="btn profile-edit-btn" type="submit">Upload Profile Photo</button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+
+
+                    @if (ViewBag.isFollowed == false)
+                    {
+                        <form asp-controller="Profile" asp-action="Follow">
+                            <div class="form-group">
+                                <button class="btn profile-edit-btn">Follow</button>
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-controller="Profile" asp-action="Unfollow">
+                            <div class="form-group">
+                                <button class="btn profile-edit-btn">Unfollow</button>
+                            </div>
+                        </form>
+                    }
+                }
+            </div>
+            <div class="profile-stats">
+                <ul>
+                    <li><span class="profile-stat-count">@TempData["CounterPhotos"]</span> posts</li>
+                    <li><span class="profile-stat-count">@TempData["CounterFollowers"]</span> followers</li>
+                    <li><span class="profile-stat-count">@TempData["CounterFollows"]</span> following</li>
+                </ul>
+            </div>
+            <div class="profile-bio">
+                <p><span class="profile-real-name text-center">@TempData["FirstName"] @TempData["LastName"]</span> @TempData["Description"]</p>
+                <!--@*Tu będzie First i Last name usera i description*@-->
+            </div>
+        </div>
+        @*Koniec sekcji Profile*@
+    </div>
+</header>
+<!--@*Koniec kontenera --- wszystko powinno być w headerze ogl*@
+
+@*Tu powinien się zacząć main*@-->
+<div class="container">
+    <div class="gallery">
+        @if (photos != null)
+        {
+            @foreach (var item in photos)
+            {                
+        <div class="gallery-item" tabindex="0">
+            <img class="gallery-image" data-lightbox="mygallery" data-title="@item.Description" src="~/img/@item.FilePath" />
+            @if (ViewBag.Email == User.Identity.Name)
+            {
+                @Html.ActionLink("EditPost", "EditPost", "Profile", new { location = item.Location, desc = item.Description, title = item.Title, id = item.Id, uploadDate = item.UploadTime})
+            }
+            <div class="gallery-item-info">
+                <ul>
+                    <li class="gallery-item-likes">
+                        <span class="visually-hiden">Hearts: </span>
+                        <i class="fas fa-heart" aria-hidden="true"> @item.score</i>
+                        <!--@*Tu będą lajki do danego zdjęcia*@-->
+                    </li>
+                </ul>
+            </div>
+        </div>
+            }
+        }
+
+    </div>
+</div>
+<!--@*Koniec galerii*@-->

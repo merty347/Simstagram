@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Simstagram2._0</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.0.1" />
+    <PackageReference Include="FluentValidation" Version="10.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Photos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\96b47b3c41b6a2e00fb225a6f67a5121.jpg" />
+  </ItemGroup>
+
+
+
+</Project>

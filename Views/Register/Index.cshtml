@@ -1,0 +1,77 @@
+﻿@model RegisterViewModel
+
+<link rel="stylesheet" href="~/css/login.css" />
+<div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+    <div class="card card0 border-0">
+        <div class="row d-flex">
+            <div class="col-lg-6">
+                <div class="card1 pb-5">
+                    <div class="row justify-content-center mt-4 mb-5 border-line">
+                        <img class="image" src="~/img/kotek.jpg" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card2 card border-0 px-4 py-5">
+                    <section>
+                        <form asp-action="Register" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="row mb-4 px-3">
+                                <h6 class="mb-0 mr-4 mt-2">Sign in with</h6>
+                                <div class="facebook text-center mr-3">
+                                    <div class="fa fa-facebook">
+                                        @*<input type="button" id="btnFacebookLogin"/>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row px-3 mb-4">
+                                <div class="line"></div>
+                                <small class="or text-center">Or</small>
+                                <div class="line"></div>
+                            </div>
+                            <div class="row px-3">
+                                <label class="mb-1" asp-for="FirstName">
+                                    <h6 class="mb-0 text-sm">First Name</h6>
+                                </label>
+                                <input asp-for="FirstName" class="mb-4" type="text" placeholder="Enter your first name" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="row px-3">
+                                <label class="mb-1" asp-for="LastName">
+                                    <h6 class="mb-0 text-sm">Last Name</h6>
+                                </label>
+                                <input asp-for="LastName" class="mb-4" type="text" placeholder="Enter your last name" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <div class="row px-3">
+                                <label class="mb-1" asp-for="Username">
+                                    <h6 class="mb-0 text-sm">Username</h6>
+                                </label>
+                                <input asp-for="Username" class="mb-4" type="text" placeholder="Create your username" />
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                            <div class="row px-3">
+                                <label class="mb-1" asp-for="Email">
+                                    <h6 class="mb-0 text-sm">Email Address</h6>
+                                </label>
+                                <input asp-for="Email" class="mb-4" type="text" placeholder="Enter your email address" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="row px-3">
+                                <label class="mb-1" asp-for="Password">
+                                    <h6 class="mb-0 text-sm">Password</h6>
+                                </label>
+                                <input asp-for="Password" class="mb-4" type="password" placeholder="Create your password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="row mb-3 px-3">
+                                <button type="submit" class="btn btn-blue text-center">Register</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

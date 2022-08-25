@@ -1,0 +1,106 @@
+﻿@model LoginViewModel
+
+<link rel="stylesheet" href="~/css/login.css" />
+<div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+    <div class="card card0 border-0">
+        <div class="row d-flex">
+            <div class="col-lg-6">
+                <div class="card1 pb-5">
+                    <div class="row justify-content-center mt-4 mb-5 border-line">
+                        <img class="image" src="~/img/kotek.jpg" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card2 card border-0 px-4 py-5">
+                    <section>
+                        <form asp-action="Login" id="account" method="post">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="row mb-4 px-3">
+                                <h6 class="mb-0 mr-4 mt-2">Sign in with</h6>
+                                <div class="facebook text-center mr-3">
+                                    <div class="fa fa-facebook">
+                                        <fb:login-button scope="public_profile, email" onlogin="checkLoginState();">
+                                        </fb:login-button>
+                                    </div>
+                                </div>
+                                @*Twitter ewentualnie*@
+                            </div>
+                            <div class="row px-3 mb-4">
+                                <div class="line"></div>
+                                <small class="or text-center">Or</small>
+                                <div class="line"></div>
+                            </div>
+                            <div class="row px-3">
+                                @*class="form-group"*@
+                                <label class="mb-1" asp-for="Email">
+                                    <h6 class="mb-0 text-sm">Email Address</h6>
+                                </label>
+                                <input asp-for="Email" class="mb-4" type="text" placeholder="Enter your email address" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="row px-3">
+                                <label class="mb-1" asp-for="Password">
+                                    <h6 class="mb-0 text-sm">Password</h6>
+                                </label>
+                                <input type="password" placeholder="Enter password" asp-for="Password" class="form-control" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="row px-3 mb-4">
+                                @**@
+                                @*<div class="custom-control custom-checkbox custom-control-inline">
+                                        <label asp-for="Input.RememberMe" class="custom-control-label text-sm">
+                                            <input class="custom-control-input" asp-for="Input.RememberMe" />
+                                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                        </label>
+                                    </div>*@
+                            </div>
+                            <div class="row mb-3 px-3">
+                                <button type="submit" class="btn btn-blue text-center">Log in</button>
+                            </div>
+                            <div class="row mb-4 px-3">
+                                <small class="font-weight-bold">
+                                    Don't have an account?
+                                    <a class="text-danger" asp-controller="Register" asp-action="Index">Register</a>
+                                </small>
+                            </div>
+                        </form>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+        appId: '1189416051498004',
+      cookie     : true,
+      xfbml      : true,
+        version: 'v10.0'
+    });
+
+    FB.AppEvents.logPageView();
+
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    FB.getLoginStatus(function (response) {
+        statusChangeCallback(response);
+    });
+    function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    }
+</script>

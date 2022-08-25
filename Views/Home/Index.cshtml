@@ -1,0 +1,152 @@
+﻿@model PhotoViewModel
+@*<link rel="stylesheet" href="~/css/profile.css" />*@
+@{
+    IEnumerable<User> users = ViewData["Userowie"] as IEnumerable<User>;
+    IEnumerable<ProfileViewModel> photos = ViewData["Photosy"] as IEnumerable<ProfileViewModel>;
+}
+<link rel="stylesheet" href="~/css/Heart.css" />
+<link rel="stylesheet" href="~/css/home.css" />
+
+<div class="mt-4">
+    <div class="container d-flex justify-content-center">
+        <div class="col-9">
+            <div class="row">
+                @* Dodawanie posta (button zmienić) class="profile-edit-btn"*@
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-body" style="color: #53488d; font-family: Open Sans, sans-serif">
+                            <form asp-action="UploadPost" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label asp-for="Photo" class="control-label submit-feedback" style="color: #53488d">Wybierz plik</label>
+                                    <input asp-for="Photo" type="file" /> @*class="form-control submit-feedback"*@
+                                    <span asp-validation-for="Photo" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <input asp-for="Description" class="form-control" />
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Localization" class="control-label"></label>
+                                    <input asp-for="Localization" class="form-control" />
+                                    <span asp-validation-for="Localization" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Title" class="control-label"></label>
+                                    <input asp-for="Title" class="form-control" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <button class="submit-feedback"style="border: none; color: #53488d" type="submit">Dodaj nowego posta</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    @*Posty*@
+                    @if (photos != null)
+                    {
+                        @foreach (var item in photos)
+                        {
+                            <div class="d-flex flex-column">
+                                <div class="card">
+                                    <div class="card-header" style="padding: 15px">
+                                        <div class="d-flex flex-row align-items-center">
+                                            @*Nazwa użytkownika + zdjęcie profilowe*@
+                                            @*<div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+                                                    <img src="~/img/@item.ProfilePhotoString"
+                                                         style="transform: scale(1.5); width: 25px; position: center; left: 0;" />
+                                                </div>*@
+                                            <div class="profile-img">
+                                                <img src="~/img/@item.ProfilePhotoString"
+                                                     style="width: 100%; left: 0; " />
+                                            </div>
+                                            <div class="profile-info" style="display: inline-block; padding-left: 20px">
+                                                <div class="name" style="font-family: Open Sans, sans-serif;
+                                                     font-size: 14px;                                                   
+                                                     color: #000000;
+                                                     font-weight: 700;">@Html.ActionLink($"{item.Username}", "Index", new { search = item.Username }, new { @style = "color: #000000; font-family: Open Sans, sans-serif" })</div>
+                                                <div class="location" style="font-size: 12px; color: 111;">@item.Location</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="embed-responsive embed-responsive-1by1">
+                                            @*idk czy powinno tu być*@<img class="embed-responsive-item" src="~/img/@item.FilePath" style="width: 100%" />
+                                        </div>
+                                        @*Licznik lajków*@
+                                        <div class="pl-3 pr-3 pb-2" style="box-sizing: border-box; padding: 10px; font-family: Open Sans, sans-serif">
+                                            <div class="likes" style="color: #lll; font-size: 12px; padding-bottom:5px;">
+                                                <strong class="d-block">@item.score likes</strong>
+                                            </div>
+                                            <div class="Title">
+                                                <p style="font-size: 14px; margin: 0"><strong class="d-block">@item.Title</strong></p>@*Tytuł*@
+                                            </div>
+                                            <div class="description">
+                                                <p style="margin: 0; font-size:14px;">
+                                                    <span style="font-weight: 700">@item.Username</span> @item.Description
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between pl-3 pr-3 pt-3 pb-1">
+                                            <div class="content">
+                                                <ul class="list-inline d-flex flex-row align-items-center m-0">
+                                                    <li class="list-inline-item">
+                                                        <form asp-controller="Home" asp-action="Like"
+                                                              asp-route-filename="@item.FilePath"
+                                                              enctype="application/x-www-form-urlencoded">
+                                                            @*<div class="form-group">
+                                <button class="btn" type="submit">
+                                    <svg width="1.6em" height="1.6em" viewBox="0 0 16 16"
+                                         class="bi bi-heart" fill="currentColor"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>*@
+                                                            <input asp-for="Photo.FileName" type="hidden" value="@item.FilePath" class="form-control" />
+                                                            <label id="like" class="like">
+                                                                <input type="submit" class="checked" />
+                                                                <div class="hearth"></div>
+                                                            </label>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+                @* Nawigacja???  *@
+                <div class="col-4" style="background-color: #ffc7fe">
+                    <div style="padding: 10px; border-bottom: 1px solid #ccc">
+                        <h3 style="color: #53488d; font-family: Open Sans, sans-serif">Użytkownicy w naszym serwisie:</h3>
+                    </div>
+                    <div style="padding: 10px;">
+                        @if (users != null)
+                        {
+                            @foreach (var item in users)
+                            {
+                                <div>
+                                    <img src="~/img/@item.ProfilePhotoPath" width="60" class="rounded mb-2 img-thumbnail" />
+                                    @Html.ActionLink($"{item.Username}", "Index", new { search = item.Username }, new { @style= "color: #53488d; font-family: Open Sans, sans-serif" })
+                                </div>
+
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let btnLike = document.querySelector('#like');
+    btnLike.addEventListener('click', () => btnLike.style.backgroungColor = '#e0245e')
+</script>
